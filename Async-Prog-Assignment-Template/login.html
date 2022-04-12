@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <style>
+            #login-form-div{
+                margin: auto;
+                width: 200px;
+                height: 200px;
+                /* display: flex;
+                justify-content: center; */
+                box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+               
+            }
+            #email,#pass{
+                margin-top: 15px;
+                text-align: center;
+            }
+            h3{
+                text-align: center;
+            }
+            form{
+                text-align: center;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="login-form-div">
+           <h3>Login </h3>
+            <form>
+                <!--Write form input elements here-->
+                
+                    <form id="form">
+                        <input type="email" id="email" placeholder="Email your Email" /><br>
+                        <input type="password" id="pass" placeholder="Enter your Password"/><br>
+                        
+                   
+                   <br>
+                   <input type="submit" name="" id="submit" value="submit">
+                </form>
+
+            </form>
+
+        </div>
+    </body>
+
+</html>
+<script>
+     document.querySelector("form").addEventListener("submit",myfun)
+      var signin=JSON.parse(localStorage.getItem("userdata")) 
+     
+      function myfun()
+      {
+            event.preventDefault()
+            var email=document.querySelector("#email").value
+            var password=document.querySelector("#pass").value
+            signin.map(function(ele){
+          if(email==ele.email && password==ele.password)
+          {
+              alert("Sign In Successful");
+             window.location.href = "index.html"
+             
+          }
+          else{
+                alert("Sign In failed")
+                
+          }
+      })
+            
+      }
+</script>

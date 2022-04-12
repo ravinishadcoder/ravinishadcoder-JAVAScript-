@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <form >
+       <input type="text" id="name" placeholder="movie name">
+       <input type="text" id="reldte" placeholder="releaseDate">
+       <input type="text" id="poster" placeholder="poster url">
+       <input type="text" id="rating" placeholder="IMDB rating">
+       <button type="submit">Submit</button>
+   </form> 
+</body>
+</html>
+
+<script>
+    document.querySelector("form").addEventListener("submit",InputData);
+   let arr = JSON.parse(localStorage.getItem("movieData"))||[]
+    function InputData(){
+        event.preventDefault();
+        let form = document.querySelector("form")
+        let name = form.name.value;
+        let releaseDate = form.reldte.value;
+        let poster = form.poster.value;
+        let rating = form.rating.value;
+
+        let All = new movieData(name,releaseDate,poster,rating);
+        arr.push(All);
+        localStorage.setItem("movieData",JSON.stringify(arr))
+        document.querySelector("form").value = null;
+    }
+    function movieData(n,r,p,idm){
+      this.name = n;
+      this.releaseDate = r;
+      this.poster = p;
+      this.idmb = idm;
+   }
+  
+</script>
