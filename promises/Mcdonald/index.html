@@ -1,0 +1,157 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    #navbar{
+        background-color: yellow;
+        color: red;
+        justify-content: center;
+        font-family: sans-serif;
+        height: 50px;
+        display: flex;
+
+    }
+    #submit{
+        border: 0.5px solid red;
+        background-color: aqua;
+        margin-top: 15px;
+        padding: 5px 20px 5px 20px;
+        text-align: center;
+        cursor: pointer;
+        
+    }
+    #menu{
+        display: flex;
+        justify-content: space-around;
+        margin-top: 5px;
+        background-color: aquamarine;
+        color:brown;
+        font-size: large;
+        font-family: sans-serif;
+
+
+    }
+    input{
+        cursor: pointer;
+    }
+    #choose{
+        text-align: center;
+        font-family: sans-serif;
+    }
+    #container{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 10px;
+        justify-content: center;
+    }
+    #container>div{
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        width: 514px;
+        margin: auto;
+    }
+    p{
+        font-size: large;
+        color: crimson;
+        font-family: sans-serif;
+    }
+    h3{
+        font-family: sans-serif;
+    }
+   
+</style>
+</head>
+<body>
+    <div id="navbar">
+    <h3>VIRTUAL MCDONALD'S</h3>
+</div>
+<h3 id="choose">Choose Your Foods From Here </h3>0
+    <form action="" id="food" onsubmit="orderFood()">
+        <div id="menu">
+            <div>
+        <input type="checkbox" id="burger" name="Burger" >
+        <label >Burger</label>   
+    </div>
+    <div>
+        <input type="checkbox" id="Franki" name="Franki" >
+        <label >Franki</label>  
+    </div>
+    <div>
+        <input type="checkbox" id="Momos" name="Momos" >
+        <label >Momos</label>   
+    </div> 
+    <div>
+        <input type="checkbox" id="Pizza" name="Pizza" >
+        <label >Pizza</label>  <br>
+    </div>
+    </div>
+        <input type="submit" id="submit" value="Order "> 
+     </form>
+     <center><h3 ><span style="color: green;">Be Patients</span>  - <span style="color: rgb(10, 169, 243);"> Your food is getting ready</span></h3></center>
+     <div id="container"></div>
+</body>
+</html>
+
+<script>
+    let arr = [];
+function orderFood(){
+    event.preventDefault();
+     let form = document.getElementById("food");
+    
+    form.burger.checked? arr.push({
+        name : "Burger",
+        img : "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/a3sq1ywjy8ccttawtdqx"
+    }):null;
+    form.Franki.checked? arr.push({
+        name : "Frankie",
+        img : "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/upwaw7es0lwzcclzgt1q"
+    }):null;
+    form.Momos.checked? arr.push({
+        name : "Momos",
+        img : "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/vvyi8jpdketykccrnn23"
+    }):null;
+    form.Pizza.checked? arr.push({
+        name : "Pizza",
+        img : "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/nfkjqjm6syfm41byffu1"
+    }):null;
+    
+    createPromise(arr)
+    //console.log(arr)
+    
+}
+    
+
+
+ function createPromise(order){
+     //console.log(order)
+     order.forEach(async function(ele,ind){
+         let promise = new Promise(function(resolve,reject){
+            let time = Math.random() * 10 * 1000;
+             setTimeout(function(){
+                //  resolve("promise res")
+                appendData(ele,ind)
+             },time)
+         })
+       
+     })
+ }
+
+ function appendData(data,ind){
+   console.log(data)
+   let main_container = document.getElementById("container");
+   let box = document.createElement("div");
+   let img = document.createElement("img");
+   img.src = data.img;
+   let p1 = document.createElement("p");
+   p1.innerText =  `Your ${data.name} is ready`
+   let p2 = document.createElement("p");
+   p2.innerText = `Order No:- ${ind+1}`
+   //console.log(ind+1)
+   box.append(p2,img,p1);
+   main_container.append(box)
+   document.getElementById("food").value = null;
+
+ }
+</script>
