@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #movies{
+            border: 1px solid black;
+            height: 200px;
+            width: 200px;
+            border-top: none;
+            overflow-y: scroll;
+        }
+        #query{
+            width: 200px;
+        }
+        #showdata{
+            margin-top: 20px;
+            width: 300px;
+            height:300px;
+            
+        }
+    </style>
+</head>
+<body>
+    <h3>Hotstar</h3>
+    <input type="text" oninput="debouncing(main,1000)" id="query">
+    <div id="movies"></div>
+    <div id="showdata"></div>
+</body>
+</html>
+
+<script>
+    let movies_div = document.getElementById("movies");
+    let id;
+async function searchmovie(){
+    try{
+    let query = document.getElementById("query").value;
+
+    let res = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=fb631683`);
+    let data = await res.json();
+    //console.log(data)
+    const movies = data.Search;
+    return movies;
+    //appendMovies(movies)
+    }catch(err){
+        console.log("err :",err)
+    }
+}
+
+function appendMovies(data){
+    movies_div.innerHTML = null;
+   data.forEach(function(ele){
+      
+       let p = document.createElement("p");
+       p.innerText = ele.Title;
+       p.style.cursor = "pointer"
+       p.addEventListener("click",function(){
+           ShowData(ele);
+       })
+       //console.log(ele.Title)
+       movies_div.append(p)
+   })
+   
+}
+
+async function main(){
+    let data = await searchmovie();
+    if(data===undefined){
+        return false;
+    }
+    appendMovies(data)
+    console.log(data)
+
+}
+
+//debouncing 
+
+function debouncing(func,delay){
+    if(id){
+        clearTimeout(id)
+    }
+   id =  setTimeout(function(){
+        func();
+    },delay);
+}
+
+function ShowData(ele){
+    console.log(ele)
+   let box = document.createElement("div");
+   let img = document.createElement("img");
+   img.src = ele.Poster;
+   let name = document.createElement("p");
+   name.innerText = ele.Title;
+   let year = document.createElement("p");
+   year.innerText = ele.Year;
+   box.append(img,name,year)
+   document.getElementById("showdata").append(box);
+   movies_div.innerHTML = null;
+
+
+}
+</script>
